@@ -18,7 +18,6 @@ frappe.search.AwesomeBar = Class.extend({
 			autoFirst: true,
 			list: [],
 			filter: function (text, term) {
-				this.get_item(text.value).boo = "foo";
 				return true;
 			},
 			data: function (item, input) {
@@ -43,6 +42,9 @@ frappe.search.AwesomeBar = Class.extend({
 				return (b.label - a.label);
 			}
 		});
+
+		// Added to aid UI testing of global search
+		input.awesomplete = awesomplete;
 
 		$input.on("input", function(e) {
 			var value = e.target.value;
@@ -188,12 +190,13 @@ frappe.search.AwesomeBar = Class.extend({
 					routes.push(str_route);
 				} else {
 					var old = routes.indexOf(str_route);
-					if(out[old].index > option.index) {
+					if(out[old].index < option.index) {
 						out[old] = option;
 					}
 				}
 			} else {
 				out.push(option);
+				routes.push("");
 			}
 		});
 		return out;

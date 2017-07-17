@@ -39,6 +39,10 @@ class CustomField(Document):
 		if not self.fieldname:
 			frappe.throw(_("Fieldname not set for Custom Field"))
 
+		if not self.flags.ignore_validate:
+			from frappe.core.doctype.doctype.doctype import check_if_fieldname_conflicts_with_methods
+			check_if_fieldname_conflicts_with_methods(self.dt, self.fieldname)
+
 	def on_update(self):
 		frappe.clear_cache(doctype=self.dt)
 		if not self.flags.ignore_validate:
@@ -73,7 +77,8 @@ class CustomField(Document):
 
 @frappe.whitelist()
 def get_fields_label(doctype=None):
-	return [{"value": df.fieldname or "", "label": _(df.label or "")} for df in frappe.get_meta(doctype).get("fields")]
+	return [{"value": df.fieldname or "", "label": _(df.label or "")}
+		for df in frappe.get_meta(doctype).get("fields")]
 
 def create_custom_field_if_values_exist(doctype, df):
 	df = frappe._dict(df)

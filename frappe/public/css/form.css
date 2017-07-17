@@ -28,7 +28,8 @@
   border-top: 1px solid #d1d8dd;
 }
 .form-message {
-  padding: 15px;
+  padding: 15px 30px;
+  border-bottom: 1px solid #d1d8dd;
 }
 .document-flow-wrapper {
   padding: 40px 15px 30px;
@@ -73,20 +74,23 @@
 }
 .form-dashboard {
   background-color: #fafbfc;
-  border-bottom: 1px solid #d1d8dd;
+}
+.form-dashboard-wrapper {
+  margin: -15px 0px;
 }
 .form-documents h6 {
   margin-top: 15px;
 }
 .form-dashboard-section {
+  margin: 0px -15px;
   padding: 15px 30px;
   border-bottom: 1px solid #EBEFF2;
 }
+.form-dashboard-section:first-child {
+  padding-top: 0px;
+}
 .form-dashboard-section:last-child {
   border-bottom: none;
-}
-.form-heatmap {
-  padding-top: 30px;
 }
 .form-heatmap .heatmap-message {
   margin-top: 10px;
@@ -194,7 +198,7 @@ h6.uppercase,
 }
 .form-section:not(:last-child),
 .form-inner-toolbar {
-  border-bottom: 1px solid #EBEFF2;
+  border-bottom: 1px solid #d1d8dd;
 }
 .empty-section {
   display: none !important;
@@ -222,6 +226,14 @@ h6.uppercase,
 }
 .badge-important {
   background-color: #e74c3c;
+}
+.address-box {
+  background-color: #fafbfc;
+  padding: 0px 15px;
+  margin: 15px 0px;
+  border: 1px solid #d1d8dd;
+  border-radius: 3px;
+  font-size: 12px;
 }
 .timeline {
   margin: 30px 0px;
@@ -272,7 +284,7 @@ h6.uppercase,
 }
 .timeline-item.user-content .media-body {
   border: 1px solid #d1d8dd;
-  border-radius: 2px;
+  border-radius: 3px;
   margin-left: -7px;
   position: relative;
   overflow: visible;
@@ -386,7 +398,7 @@ h6.uppercase,
 .timeline-head {
   background-color: white;
   border: 1px solid #d1d8dd;
-  border-radius: 2px;
+  border-radius: 3px;
   position: relative;
   z-index: 1;
 }
@@ -488,6 +500,7 @@ h6.uppercase,
 }
 .like-disabled-input.for-description {
   font-weight: normal;
+  font-size: 12px;
 }
 .frappe-control {
   margin-bottom: 10px;
@@ -522,19 +535,17 @@ select.form-control {
   font-weight: bold;
   background-color: #fffdf4;
 }
-.form-headline {
-  padding: 0px 15px;
-  margin: 0px;
+.form-control[data-fieldtype="Password"] {
+  position: inherit;
 }
-.form-headline .alert {
-  font-size: 12px;
-  background-color: #fffce7;
-  font-weight: normal !important;
-  border: 0px;
-  border-radius: 0px;
-  margin-bottom: 0px;
-  margin: 0px -15px;
-  padding: 10px 30px;
+.password-strength-indicator {
+  float: right;
+  padding: 15px;
+  margin-top: -41px;
+  margin-right: -7px;
+}
+.password-strength-message {
+  margin-top: -10px;
 }
 .delivery-status-indicator {
   display: inline-block;
@@ -630,6 +641,92 @@ select.form-control {
   .form-page .form-control:focus {
     box-shadow: none;
   }
+}
+/* goals */
+.goals-page-container {
+  background-color: #fafbfc;
+  padding-top: 1px;
+}
+.goals-page-container .goal-container {
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  border-radius: 2px;
+  padding: 10px;
+  margin: 10px;
+}
+.graph-container .graphics {
+  margin-top: 10px;
+  padding: 10px 0px;
+}
+.graph-container .stats-group {
+  display: flex;
+  justify-content: space-around;
+  flex: 1;
+}
+.graph-container .stats-container {
+  display: flex;
+  justify-content: space-around;
+}
+.graph-container .stats-container .stats {
+  padding-bottom: 15px;
+}
+.graph-container .stats-container .stats-title {
+  color: #8D99A6;
+}
+.graph-container .stats-container .stats-value {
+  font-size: 20px;
+  font-weight: 300;
+}
+.graph-container .stats-container .stats-description {
+  font-size: 12px;
+  color: #8D99A6;
+}
+.graph-container .stats-container .graph-data .stats-value {
+  color: #98d85b;
+}
+.bar-graph .axis,
+.line-graph .axis {
+  font-size: 10px;
+  fill: #6a737d;
+}
+.bar-graph .axis line,
+.line-graph .axis line {
+  stroke: rgba(27, 31, 35, 0.1);
+}
+.data-points circle {
+  fill: #28a745;
+  stroke: #fff;
+  stroke-width: 2;
+}
+.data-points g.mini {
+  fill: #98d85b;
+}
+.data-points path {
+  fill: none;
+  stroke: #28a745;
+  stroke-opacity: 1;
+  stroke-width: 2px;
+}
+.line-graph .path {
+  fill: none;
+  stroke: #28a745;
+  stroke-opacity: 1;
+  stroke-width: 2px;
+}
+line.dashed {
+  stroke-dasharray: 5,3;
+}
+.tick.x-axis-label {
+  display: block;
+}
+.tick .specific-value {
+  text-anchor: start;
+}
+.tick .y-value-text {
+  text-anchor: end;
+}
+.tick .x-value-text {
+  text-anchor: middle;
 }
 body[data-route^="Form/Communication"] textarea[data-fieldname="subject"] {
   height: 80px !important;

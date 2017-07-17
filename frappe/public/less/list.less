@@ -54,7 +54,7 @@
 }
 
 .filter-box {
-	border-top: 1px solid @border-color;
+	border-bottom: 1px solid @border-color;
 	// margin: 0px -15px;
 	padding: 10px 15px 3px;
 
@@ -319,6 +319,12 @@
 	}
 }
 
+.page-form {
+	.awesomplete > ul {
+		min-width: 300px;
+	}
+}
+
 .taggle_input {
 	padding: 0;
 	margin-top: 3px;
@@ -544,6 +550,7 @@
 	&--activity {
 		justify-content: flex-end;
 		margin-right: 5px;
+		min-width: 110px;
 
 		.list-row-modified, .avatar-small {
 			margin-right: 10px;

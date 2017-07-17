@@ -9,6 +9,7 @@ import os, json
 from frappe import _
 from frappe.modules import scrub, get_module_path
 from frappe.utils import flt, cint, get_html_format, cstr
+from frappe.model.utils import render_include
 from frappe.translate import send_translations
 import frappe.desk.reportview
 from frappe.permissions import get_role_permissions
@@ -55,7 +56,7 @@ def get_script(report_name):
 		send_translations(frappe.get_lang_dict("report", report_name))
 
 	return {
-		"script": script,
+		"script": render_include(script),
 		"html_format": html_format
 	}
 
@@ -104,7 +105,7 @@ def run(report_name, filters=None, user=None):
 
 	if cint(report.add_total_row) and result:
 		result = add_total_row(result, columns)
-		
+
 	return {
 		"result": result,
 		"columns": columns,
@@ -145,7 +146,7 @@ def export_query():
 		# add column headings
 		for idx in range(len(data.columns)):
 			result[0].append(columns[idx]["label"])
-			
+
 		# build table from dict
 		if isinstance(data.result[0], dict):
 			for i,row in enumerate(data.result):
@@ -158,7 +159,7 @@ def export_query():
 				elif not row:
 					result.append([])
 		else:
-			result = result + data.result
+			result = result + [d for i,d in enumerate(data.result) if (i+1 in visible_idx)]
 
 		from frappe.utils.xlsxutils import make_xlsx
 		xlsx_file = make_xlsx(result, "Query Report")
@@ -207,7 +208,7 @@ def add_total_row(result, columns, meta = None):
 			total_row[i] = result[0][i]
 
 	for i in has_percent:
-		total_row[i] = total_row[i] / len(result)
+		total_row[i] = flt(total_row[i]) / len(result)
 
 	first_col_fieldtype = None
 	if isinstance(columns[0], basestring):

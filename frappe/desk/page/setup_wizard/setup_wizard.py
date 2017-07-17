@@ -86,6 +86,11 @@ def update_user_name(args):
 		first_name, last_name = first_name.split(' ', 1)
 
 	if args.get("email"):
+		if frappe.db.exists('User', args.get('email')):
+			# running again
+			return
+
+
 		args['name'] = args.get("email")
 
 		_mute_emails, frappe.flags.mute_emails = frappe.flags.mute_emails, True
@@ -174,11 +179,27 @@ def load_messages(language):
 
 @frappe.whitelist()
 def load_languages():
+	language_codes = frappe.db.sql('select language_code, language_name from tabLanguage order by name', as_dict=True)
+	codes_to_names = {}
+	for d in language_codes:
+		codes_to_names[d.language_code] = d.language_name
 	return {
 		"default_language": frappe.db.get_value('Language', frappe.local.lang, 'language_name') or frappe.local.lang,
-		"languages": sorted(frappe.db.sql_list('select language_name from tabLanguage order by name'))
+		"languages": sorted(frappe.db.sql_list('select language_name from tabLanguage order by name')),
+		"codes_to_names": codes_to_names
 	}
 
+@frappe.whitelist()
+def load_country():
+	from frappe.sessions import get_geo_ip_country
+	return get_geo_ip_country(frappe.local.request_ip) if frappe.local.request_ip else None
+
+@frappe.whitelist()
+def load_user_details():
+	return {
+		"full_name": frappe.cache().hget("full_name", "signup"),
+		"email": frappe.cache().hget("email", "signup")
+	}
 
 def prettify_args(args):
 	# remove attachments
